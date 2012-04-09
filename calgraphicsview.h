@@ -2,13 +2,15 @@
 #define CALGRAPHICSVIEW_H
 
 #include <QGraphicsView>
+#include <QMouseEvent>
 
 class CalGraphicsView : public QGraphicsView
 {
     Q_OBJECT
 public:
     explicit CalGraphicsView(QObject *parent = 0);
-    void resizeEvent(QResizeEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event);
+    void mousePressEvent(QMouseEvent *event);
 
 signals:
     
