@@ -32,6 +32,15 @@ void MainWindow::onLoad()
 
 void MainWindow::onPathChange(QString p)
 {
-    scene.addPixmap( QPixmap(p) );
-    ui->graphics->setScene(&scene);
+    m_pixmap = QPixmap(p);
+    m_pixmap_backup = m_pixmap;
+    m_scene.addPixmap(m_pixmap);
+    ui->graphics->setScene(&m_scene);
+}
+
+void MainWindow::resizeEvent(QResizeEvent *event)
+{
+    std::cout << "resized" << std::endl;
+    m_pixmap = m_pixmap_backup.scaled(ui->graphics->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    m_scene.addPixmap(m_pixmap);
 }

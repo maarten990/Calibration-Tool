@@ -7,6 +7,7 @@
 #include <QGraphicsScene>
 #include <QPixmap>
 #include <QPoint>
+#include <QResizeEvent>
 
 namespace Ui {
 class MainWindow;
@@ -21,13 +22,18 @@ public:
     ~MainWindow();
     
 private:
+    // fields
     Ui::MainWindow *ui;
-    QGraphicsScene scene;
+    QGraphicsScene m_scene;
+    QPixmap m_pixmap;
+    QPixmap m_pixmap_backup;
+
+    // methods
+    void resizeEvent(QResizeEvent *);
 
 public slots:
     void onLoad();
     void onPathChange(QString p);
-    void onClicked(QPoint p);
 
 signals:
     void pathChanged(QString p);

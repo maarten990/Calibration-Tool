@@ -40,7 +40,7 @@
      </layout>
     </item>
     <item>
-     <widget class="QGraphicsView" name="graphics"/>
+     <widget class="CalGraphicsView" name="graphics"/>
     </item>
    </layout>
   </widget>
@@ -65,6 +65,13 @@
   <widget class="QStatusBar" name="statusBar"/>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>CalGraphicsView</class>
+   <extends>QGraphicsView</extends>
+   <header>calgraphicsview.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

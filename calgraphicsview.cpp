@@ -1,7 +1,6 @@
 #include "calgraphicsview.h"
 
-CalGraphicsView::CalGraphicsView(QObject *parent) :
-    QGraphicsView(parent)
+CalGraphicsView::CalGraphicsView(QObject *parent)
 {
 }
 
