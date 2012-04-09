@@ -14,7 +14,6 @@ MainWindow::MainWindow(QWidget *parent) :
      */
     connect(ui->button_load, SIGNAL(clicked()), this, SLOT(onLoad()));
     connect(this, SIGNAL(pathChanged(QString)), this, SLOT(onPathChange(QString)));
-    connect(this, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(onClicked(QPoint)));
 }
 
 MainWindow::~MainWindow()
@@ -35,9 +34,4 @@ void MainWindow::onPathChange(QString p)
 {
     scene.addPixmap( QPixmap(p) );
     ui->graphics->setScene(&scene);
-}
-
-void MainWindow::onClicked(QPoint p)
-{
-    std::cout << "Clicked: " << p.x() << ", " << p.y() << std::endl;
 }
