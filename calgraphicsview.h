@@ -3,6 +3,7 @@
 
 #include <QGraphicsView>
 #include <QMouseEvent>
+#include <QPoint>
 
 class CalGraphicsView : public QGraphicsView
 {
@@ -11,6 +12,9 @@ public:
     explicit CalGraphicsView(QObject *parent = 0);
     void mouseReleaseEvent(QMouseEvent *event);
     void mousePressEvent(QMouseEvent *event);
+
+private:
+    QPoint m_rect_start;
 
 signals:
     
