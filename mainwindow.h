@@ -8,6 +8,7 @@
 #include <QPixmap>
 #include <QPoint>
 #include <QResizeEvent>
+#include <QtAlgorithms>
 
 namespace Ui {
 class MainWindow;
@@ -24,7 +25,7 @@ public:
 private:
     // fields
     Ui::MainWindow *ui;
-    QGraphicsScene m_scene;
+    QGraphicsScene *m_scene;
     QPixmap m_pixmap;
     QPixmap m_pixmap_backup;
 

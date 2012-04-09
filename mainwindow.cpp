@@ -9,6 +9,8 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    m_scene = new QGraphicsScene;
+
     /*
      * connections
      */
@@ -19,6 +21,7 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete m_scene;
 }
 
 /*
@@ -34,13 +37,22 @@ void MainWindow::onPathChange(QString p)
 {
     m_pixmap = QPixmap(p);
     m_pixmap_backup = m_pixmap;
-    m_scene.addPixmap(m_pixmap);
-    ui->graphics->setScene(&m_scene);
+
+    delete m_scene;
+    m_scene = new QGraphicsScene;
+
+    m_scene->addPixmap(m_pixmap);
+    ui->graphics->setScene(m_scene);
 }
 
 void MainWindow::resizeEvent(QResizeEvent *event)
 {
     std::cout << "resized" << std::endl;
-    m_pixmap = m_pixmap_backup.scaled(ui->graphics->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
-    m_scene.addPixmap(m_pixmap);
+    m_pixmap = m_pixmap_backup.scaled(ui->graphics->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+
+    delete m_scene;
+    m_scene = new QGraphicsScene;
+
+    m_scene->addPixmap(m_pixmap);
+    ui->graphics->setScene(m_scene);
 }
