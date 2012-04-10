@@ -9,6 +9,10 @@ QT       += core gui
 TARGET = CalibrationTool
 TEMPLATE = app
 
+unix {
+   CONFIG += link_pkgconfig
+   PKGCONFIG += opencv
+}
 
 SOURCES += main.cpp\
         mainwindow.cpp \

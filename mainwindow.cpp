@@ -35,6 +35,7 @@ void MainWindow::onLoad()
 
 void MainWindow::onPathChange(QString p)
 {
+    // updating the pixmap/graphicsscene
     m_pixmap = QPixmap(p);
     m_pixmap_backup = m_pixmap;
 
@@ -43,6 +44,16 @@ void MainWindow::onPathChange(QString p)
 
     m_scene->addPixmap(m_pixmap);
     ui->graphics->setScene(m_scene);
+
+    // updating the underlying IplImage
+    if (m_image)
+        cvReleaseImage(&m_image);
+    if (m_image_hsv)
+        cvReleaseImage(&m_image_hsv);
+
+    m_image = cvLoadImage(p.toStdString().c_str());
+    m_image_hsv = cvCreateImage(cvGetSize(m_image), 8, 3);
+    cvCvtColor(m_image, m_image_hsv, CV_BGR2HSV);
 }
 
 void MainWindow::resizeEvent(QResizeEvent *event)

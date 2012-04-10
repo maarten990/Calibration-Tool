@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+// Qt
 #include <QMainWindow>
 #include <QFileDialog>
 #include <QString>
@@ -9,6 +10,10 @@
 #include <QPoint>
 #include <QResizeEvent>
 #include <QtAlgorithms>
+
+// OpenCV
+#include <cv.h>
+#include <highgui.h>
 
 namespace Ui {
 class MainWindow;
@@ -28,6 +33,9 @@ private:
     QGraphicsScene *m_scene;
     QPixmap m_pixmap;
     QPixmap m_pixmap_backup;
+
+    IplImage *m_image;
+    IplImage *m_image_hsv;
 
     // methods
     void resizeEvent(QResizeEvent *);
