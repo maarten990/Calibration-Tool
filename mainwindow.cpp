@@ -9,7 +9,12 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    /*
+     * variable initializations
+     */
     m_scene = new QGraphicsScene;
+    m_image = 0;
+    m_image_hsv = 0;
 
     /*
      * connections
@@ -46,9 +51,9 @@ void MainWindow::onPathChange(QString p)
     ui->graphics->setScene(m_scene);
 
     // updating the underlying IplImage
-    if (m_image)
+    if (m_image != 0)
         cvReleaseImage(&m_image);
-    if (m_image_hsv)
+    if (m_image_hsv != 0)
         cvReleaseImage(&m_image_hsv);
 
     m_image = cvLoadImage(p.toStdString().c_str());

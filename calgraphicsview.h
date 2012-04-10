@@ -4,6 +4,7 @@
 #include <QGraphicsView>
 #include <QMouseEvent>
 #include <QPoint>
+#include <QGraphicsRectItem>
 
 class CalGraphicsView : public QGraphicsView
 {
@@ -15,6 +16,7 @@ public:
 
 private:
     QPoint m_rect_start;
+    QGraphicsRectItem *m_rect;
 
 signals:
     
