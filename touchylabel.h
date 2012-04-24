@@ -18,6 +18,7 @@ public:
     void mousePressEvent(QMouseEvent *ev);
     void mouseReleaseEvent(QMouseEvent *ev);
     void mouseMoveEvent(QMouseEvent *ev);
+    void correctSize(QPoint *point);
 
     // fields
     QPixmap m_pixmap_orig;
@@ -25,7 +26,8 @@ public:
     IplImage *m_img;
     IplImage *m_hsv;
     QPoint m_start_point;
-    
+    QPoint m_end_point;
+
 signals:
     
 public slots:

@@ -54,7 +54,6 @@ void MainWindow::onPathChange(QString p)
 
     ui->imageLabel->setPixmap(m_pixmap);
     this->resize(0, 0);
-    this->setFixedSize(0, 0);
 
     m_image = cvLoadImage(p.toStdString().c_str());
     m_image_hsv = cvCreateImage(cvGetSize(m_image), 8, 3);
