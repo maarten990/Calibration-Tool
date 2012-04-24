@@ -40,7 +40,11 @@
      </layout>
     </item>
     <item>
-     <widget class="CalGraphicsView" name="graphics"/>
+     <widget class="TouchyLabel" name="imageLabel">
+      <property name="text">
+       <string>Image goes here!</string>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>
@@ -67,9 +71,9 @@
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
-   <class>CalGraphicsView</class>
-   <extends>QGraphicsView</extends>
-   <header>calgraphicsview.h</header>
+   <class>TouchyLabel</class>
+   <extends>QLabel</extends>
+   <header>touchylabel.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

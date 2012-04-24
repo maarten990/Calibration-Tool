@@ -16,9 +16,9 @@ unix {
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    calgraphicsview.cpp
+    touchylabel.cpp
 
 HEADERS  += mainwindow.h \
-    calgraphicsview.h
+    touchylabel.h
 
 FORMS    += mainwindow.ui

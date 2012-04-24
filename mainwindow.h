@@ -5,11 +5,11 @@
 #include <QMainWindow>
 #include <QFileDialog>
 #include <QString>
-#include <QGraphicsScene>
 #include <QPixmap>
 #include <QPoint>
-#include <QResizeEvent>
 #include <QtAlgorithms>
+#include <QEvent>
+#include <QMouseEvent>
 
 // OpenCV
 #include <cv.h>
@@ -30,15 +30,12 @@ public:
 private:
     // fields
     Ui::MainWindow *ui;
-    QGraphicsScene *m_scene;
     QPixmap m_pixmap;
-    QPixmap m_pixmap_backup;
 
     IplImage *m_image;
     IplImage *m_image_hsv;
 
-    // methods
-    void resizeEvent(QResizeEvent *);
+    QPoint point_begin;
 
 public slots:
     void onLoad();

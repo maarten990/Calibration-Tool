@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 
 #include <iostream>
+using namespace std;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -12,9 +13,12 @@ MainWindow::MainWindow(QWidget *parent) :
     /*
      * variable initializations
      */
-    m_scene = new QGraphicsScene;
     m_image = 0;
     m_image_hsv = 0;
+
+    // setting up the imageLabel
+    ui->imageLabel->setBackgroundRole(QPalette::Base);
+    ui->imageLabel->setAlignment(Qt::AlignTop & Qt::AlignLeft);
 
     /*
      * connections
@@ -26,7 +30,6 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
-    delete m_scene;
 }
 
 /*
@@ -42,13 +45,6 @@ void MainWindow::onPathChange(QString p)
 {
     // updating the pixmap/graphicsscene
     m_pixmap = QPixmap(p);
-    m_pixmap_backup = m_pixmap;
-
-    delete m_scene;
-    m_scene = new QGraphicsScene;
-
-    m_scene->addPixmap(m_pixmap);
-    ui->graphics->setScene(m_scene);
 
     // updating the underlying IplImage
     if (m_image != 0)
@@ -56,19 +52,14 @@ void MainWindow::onPathChange(QString p)
     if (m_image_hsv != 0)
         cvReleaseImage(&m_image_hsv);
 
+    ui->imageLabel->setPixmap(m_pixmap);
+    this->resize(0, 0);
+    this->setFixedSize(0, 0);
+
     m_image = cvLoadImage(p.toStdString().c_str());
     m_image_hsv = cvCreateImage(cvGetSize(m_image), 8, 3);
     cvCvtColor(m_image, m_image_hsv, CV_BGR2HSV);
-}
 
-void MainWindow::resizeEvent(QResizeEvent *event)
-{
-    std::cout << "resized" << std::endl;
-    m_pixmap = m_pixmap_backup.scaled(ui->graphics->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-
-    delete m_scene;
-    m_scene = new QGraphicsScene;
-
-    m_scene->addPixmap(m_pixmap);
-    ui->graphics->setScene(m_scene);
+    // passing the iplImage to the QLabel
+    ui->imageLabel->setImage(m_image, m_image_hsv);
 }
