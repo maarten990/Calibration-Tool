@@ -29,6 +29,7 @@ MainWindow::MainWindow(QWidget *parent) :
      */
     connect(ui->button_load, SIGNAL(clicked()), this, SLOT(onLoad()));
     connect(ui->button_values, SIGNAL(clicked()), this, SLOT(onGetHSV()));
+    connect(ui->button_add, SIGNAL(clicked()), this, SLOT(onAdd()));
     connect(this, SIGNAL(pathChanged(QString)), this, SLOT(onPathChange(QString)));
 }
 
@@ -71,6 +72,17 @@ void MainWindow::onPathChange(QString p)
 void MainWindow::onGetHSV()
 {
     ui->imageLabel->setValues();
+    updateOutput();
+}
+
+void MainWindow::onAdd()
+{
+    ui->imageLabel->setValues(false);
+    updateOutput();
+}
+
+void MainWindow::updateOutput()
+{
     HSVMinMax minmax = ui->imageLabel->getValues();
 
     stringstream sstr;

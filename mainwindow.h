@@ -35,12 +35,14 @@ private:
     IplImage *m_image;
     IplImage *m_image_hsv;
 
-    QPoint point_begin;
+    // methods
+    void updateOutput();
 
 public slots:
     void onLoad();
     void onPathChange(QString p);
     void onGetHSV();
+    void onAdd();
 
 signals:
     void pathChanged(QString p);

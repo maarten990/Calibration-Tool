@@ -59,10 +59,11 @@ HSVMinMax TouchyLabel::getValues()
     return m_values;
 }
 
-void TouchyLabel::setValues()
+void TouchyLabel::setValues(bool reset)
 {
-    // resetting the old values
-    m_values.reset();
+    // resetting the old values if required
+    if (reset)
+        m_values.reset();
 
     CvMat *mat = cvCreateMat(m_hsv->height, m_hsv->width, CV_32FC3);
     cvConvert(m_hsv, mat);

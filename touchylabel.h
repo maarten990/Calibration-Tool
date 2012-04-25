@@ -16,7 +16,7 @@ public:
     // methods
     explicit TouchyLabel(QWidget*& w);
     void setImage(IplImage *img, IplImage *hsv);
-    void setValues();
+    void setValues(bool reset=true);
     HSVMinMax getValues();
 
 private:
