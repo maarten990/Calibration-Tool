@@ -40,6 +40,7 @@ private:
 public slots:
     void onLoad();
     void onPathChange(QString p);
+    void onGetHSV();
 
 signals:
     void pathChanged(QString p);

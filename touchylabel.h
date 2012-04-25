@@ -5,6 +5,7 @@
 #include <QMouseEvent>
 #include <QPoint>
 #include <QPixmap>
+#include "hsvminmax.h"
 
 #include <cv.h>
 
@@ -15,6 +16,11 @@ public:
     // methods
     explicit TouchyLabel(QWidget*& w);
     void setImage(IplImage *img, IplImage *hsv);
+    void setValues();
+    HSVMinMax getValues();
+
+private:
+    // methods
     void mousePressEvent(QMouseEvent *ev);
     void mouseReleaseEvent(QMouseEvent *ev);
     void mouseMoveEvent(QMouseEvent *ev);
@@ -27,6 +33,8 @@ public:
     IplImage *m_hsv;
     QPoint m_start_point;
     QPoint m_end_point;
+    HSVMinMax m_values;
+
 
 signals:
     

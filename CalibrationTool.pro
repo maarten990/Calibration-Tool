@@ -19,6 +19,7 @@ SOURCES += main.cpp\
     touchylabel.cpp
 
 HEADERS  += mainwindow.h \
-    touchylabel.h
+    touchylabel.h \
+    hsvminmax.h
 
 FORMS    += mainwindow.ui

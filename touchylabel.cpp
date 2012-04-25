@@ -36,8 +36,6 @@ void TouchyLabel::mouseReleaseEvent(QMouseEvent *ev)
 {
     m_end_point = ev->pos();
     correctSize(&m_end_point);
-
-    cout << "End: " << m_end_point.x() << ", " << m_end_point.y() << endl;
 }
 
 void TouchyLabel::correctSize(QPoint *point) {
@@ -54,4 +52,40 @@ void TouchyLabel::setImage(IplImage *img, IplImage *hsv)
     m_pixmap_orig = *(this->pixmap());
     m_img = img;
     m_hsv = hsv;
+}
+
+HSVMinMax TouchyLabel::getValues()
+{
+    return m_values;
+}
+
+void TouchyLabel::setValues()
+{
+    CvMat *mat = cvCreateMat(m_hsv->height, m_hsv->width, CV_32FC3);
+    cvConvert(m_hsv, mat);
+    CvScalar scalar;
+
+    for (int x = m_start_point.x(); x < m_end_point.x(); ++x) {
+        for (int y = m_start_point.y(); y < m_end_point.y(); ++y) {
+            scalar = cvGet2D(mat, y, x);
+
+            // checking the hue
+            if (scalar.val[0] < m_values.hue_min)
+                m_values.hue_min = scalar.val[0];
+            else if (scalar.val[0] > m_values.hue_max)
+                m_values.hue_max = scalar.val[0];
+
+            // checking the value
+            if (scalar.val[1] < m_values.val_min)
+                m_values.val_min = scalar.val[1];
+            else if (scalar.val[1] > m_values.val_max)
+                m_values.val_max = scalar.val[1];
+
+            // checking the saturation
+            if (scalar.val[2] < m_values.sat_min)
+                m_values.sat_min = scalar.val[2];
+            else if (scalar.val[2] > m_values.sat_max)
+                m_values.sat_max = scalar.val[2];
+        }
+    }
 }

@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "hsvminmax.h"
 
 #include <iostream>
 using namespace std;
@@ -24,6 +25,7 @@ MainWindow::MainWindow(QWidget *parent) :
      * connections
      */
     connect(ui->button_load, SIGNAL(clicked()), this, SLOT(onLoad()));
+    connect(ui->button_values, SIGNAL(clicked()), this, SLOT(onGetHSV()));
     connect(this, SIGNAL(pathChanged(QString)), this, SLOT(onPathChange(QString)));
 }
 
@@ -61,4 +63,14 @@ void MainWindow::onPathChange(QString p)
 
     // passing the iplImage to the QLabel
     ui->imageLabel->setImage(m_image, m_image_hsv);
+}
+
+void MainWindow::onGetHSV()
+{
+    ui->imageLabel->setValues();
+    HSVMinMax minmax = ui->imageLabel->getValues();
+
+    cout << "hue: " << (int) minmax.hue_min << " : " << (int) minmax.hue_max << endl;
+    cout << "val: " << (int) minmax.val_min << " : " << (int) minmax.val_max << endl;
+    cout << "sat: " << (int) minmax.sat_min << " : " << (int) minmax.sat_max << endl;
 }
