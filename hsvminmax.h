@@ -16,7 +16,7 @@ struct HSVMinMax
         val_max = 0;
     }
 
-    unsigned char hue_min, hue_max, sat_min, sat_max, val_min, val_max;
+    int hue_min, hue_max, sat_min, sat_max, val_min, val_max;
 };
 
 #endif // HSVMINMAX_H

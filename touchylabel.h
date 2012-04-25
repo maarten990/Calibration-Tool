@@ -5,9 +5,12 @@
 #include <QMouseEvent>
 #include <QPoint>
 #include <QPixmap>
+#include <vector>
 #include "hsvminmax.h"
 
 #include <cv.h>
+
+using namespace std;
 
 class TouchyLabel : public QLabel
 {
@@ -34,6 +37,9 @@ private:
     QPoint m_start_point;
     QPoint m_end_point;
     HSVMinMax m_values;
+    vector<int> m_hues;
+    vector<int> m_sats;
+    vector<int> m_vals;
 
 
 signals:
