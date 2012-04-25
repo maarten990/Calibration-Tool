@@ -61,6 +61,9 @@ HSVMinMax TouchyLabel::getValues()
 
 void TouchyLabel::setValues()
 {
+    // resetting the old values
+    m_values.reset();
+
     CvMat *mat = cvCreateMat(m_hsv->height, m_hsv->width, CV_32FC3);
     cvConvert(m_hsv, mat);
     CvScalar scalar;

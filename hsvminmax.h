@@ -4,6 +4,10 @@
 struct HSVMinMax
 {
     HSVMinMax() {
+        reset();
+    }
+
+    void reset() {
         hue_min = 255;
         hue_max = 0;
         sat_min = 255;

@@ -3,6 +3,9 @@
 #include "hsvminmax.h"
 
 #include <iostream>
+#include <sstream>
+#include <QString>
+
 using namespace std;
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -70,7 +73,20 @@ void MainWindow::onGetHSV()
     ui->imageLabel->setValues();
     HSVMinMax minmax = ui->imageLabel->getValues();
 
-    cout << "hue: " << (int) minmax.hue_min << " : " << (int) minmax.hue_max << endl;
-    cout << "val: " << (int) minmax.val_min << " : " << (int) minmax.val_max << endl;
-    cout << "sat: " << (int) minmax.sat_min << " : " << (int) minmax.sat_max << endl;
+    stringstream sstr;
+
+    // hue
+    sstr << "hue_min = " << (int) minmax.hue_min << endl;
+    sstr << "hue_max = " << (int) minmax.hue_max << endl;
+
+    // saturation
+    sstr << "sat_min = " << (int) minmax.sat_min << endl;
+    sstr << "sat_max = " << (int) minmax.sat_max << endl;
+
+    // value
+    sstr << "val_min = " << (int) minmax.val_min << endl;
+    sstr << "val_max = " << (int) minmax.val_max << endl;
+
+    ui->output_text->setPlainText(QString(sstr.str().c_str()));
+    ui->output_text->update();
 }
