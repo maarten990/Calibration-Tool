@@ -44,7 +44,8 @@ MainWindow::~MainWindow()
 void MainWindow::onLoad()
 {
     QString path = QFileDialog::getOpenFileName(this, "Choose an image", ".");
-    emit pathChanged(path);
+    if (path != "")
+        emit pathChanged(path);
 }
 
 void MainWindow::onPathChange(QString p)
