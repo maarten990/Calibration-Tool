@@ -32,6 +32,8 @@ MainWindow::MainWindow(QWidget *parent) :
     // resizing to the smallest necessary size
     this->resize(0, 0);
 
+    m_cur_is_threshed = false;
+
     /*
      * connections
      */
@@ -137,18 +139,26 @@ void MainWindow::onNext()
 
 void MainWindow::onThresh()
 {
-    IplImage *hsv = ui->imageLabel->getHSVImage();
-    IplImage *threshed = cvCreateImage(cvGetSize(hsv), 8, 1);
+    if (!m_cur_is_threshed) {
+        IplImage *hsv = ui->imageLabel->getHSVImage();
+        IplImage *threshed = cvCreateImage(cvGetSize(hsv), 8, 1);
 
-    HSVMinMax v = ui->imageLabel->getValues();
-    CvScalar lower = cvScalar(v.hue_min, v.sat_min, v.val_min);
-    CvScalar upper = cvScalar(v.hue_max, v.sat_max, v.val_max);
+        HSVMinMax v = ui->imageLabel->getValues();
+        CvScalar lower = cvScalar(v.hue_min, v.sat_min, v.val_min);
+        CvScalar upper = cvScalar(v.hue_max, v.sat_max, v.val_max);
 
-    cvInRangeS(hsv, lower, upper, threshed);
+        cvInRangeS(hsv, lower, upper, threshed);
 
-    cvSaveImage("temp.png", threshed);
+        cvSaveImage("temp.png", threshed);
 
-    emit pathChanged(QString("./temp.png"));
+        m_cur_is_threshed = true;
+        emit pathChanged(QString("./temp.png"));
+    }
+
+    else {
+        m_cur_is_threshed = false;
+        emit pathChanged(*m_cur_path);
+    }
 }
 
 void MainWindow::updateOutput()

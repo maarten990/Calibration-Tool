@@ -42,6 +42,9 @@ private:
     vector<QString> m_paths;
     vector<QString>::iterator m_cur_path;
 
+    // variable to hold whether the current image is a thresholded one
+    bool m_cur_is_threshed;
+
     // methods
     void updateOutput();
 
