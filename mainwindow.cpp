@@ -140,6 +140,10 @@ void MainWindow::onNext()
 void MainWindow::onThresh()
 {
     if (!m_cur_is_threshed) {
+        // disabling the value butotns
+        ui->button_add->setEnabled(false);
+        ui->button_values->setEnabled(false);
+
         IplImage *hsv = ui->imageLabel->getHSVImage();
         IplImage *threshed = cvCreateImage(cvGetSize(hsv), 8, 1);
 
@@ -156,6 +160,10 @@ void MainWindow::onThresh()
     }
 
     else {
+        // enabling the value butotns
+        ui->button_add->setEnabled(true);
+        ui->button_values->setEnabled(true);
+
         m_cur_is_threshed = false;
         emit pathChanged(*m_cur_path);
     }
