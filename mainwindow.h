@@ -52,6 +52,7 @@ public slots:
     void onAdd();
     void onPrevious();
     void onNext();
+    void onThresh();
 
 signals:
     void pathChanged(QString p);

@@ -21,6 +21,7 @@ public:
     void setImage(IplImage *img, IplImage *hsv);
     void setValues(bool reset=true);
     HSVMinMax getValues();
+    IplImage* getHSVImage();
 
 private:
     // methods

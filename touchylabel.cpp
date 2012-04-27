@@ -117,3 +117,8 @@ void TouchyLabel::setValues(bool reset)
     m_values.val_min = val_min;
     m_values.val_max = val_max;
 }
+
+IplImage* TouchyLabel::getHSVImage()
+{
+    return m_hsv;
+}

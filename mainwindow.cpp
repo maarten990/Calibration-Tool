@@ -40,6 +40,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->button_add, SIGNAL(clicked()), this, SLOT(onAdd()));
     connect(ui->button_previous, SIGNAL(clicked()), this, SLOT(onPrevious()));
     connect(ui->button_next, SIGNAL(clicked()), this, SLOT(onNext()));
+    connect(ui->button_thresh, SIGNAL(clicked()), this, SLOT(onThresh()));
 
     connect(this, SIGNAL(pathChanged(QString)), this, SLOT(onPathChange(QString)));
 }
@@ -131,6 +132,22 @@ void MainWindow::onNext()
     }
 
     emit pathChanged(*m_cur_path);
+}
+
+void MainWindow::onThresh()
+{
+    IplImage *hsv = ui->imageLabel->getHSVImage();
+    IplImage *threshed = cvCreateImage(cvGetSize(hsv), 8, 1);
+
+    HSVMinMax v = ui->imageLabel->getValues();
+    CvScalar lower = cvScalar(v.hue_min, v.sat_min, v.val_min);
+    CvScalar upper = cvScalar(v.hue_max, v.sat_max, v.val_max);
+
+    cvInRangeS(hsv, lower, upper, threshed);
+
+    cvSaveImage("temp.png", threshed);
+
+    emit pathChanged(QString("./temp.png"));
 }
 
 void MainWindow::updateOutput()
