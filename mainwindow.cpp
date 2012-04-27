@@ -5,6 +5,7 @@
 #include <iostream>
 #include <sstream>
 #include <QString>
+#include <QStringList>
 
 using namespace std;
 
@@ -37,6 +38,9 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->button_load, SIGNAL(clicked()), this, SLOT(onLoad()));
     connect(ui->button_values, SIGNAL(clicked()), this, SLOT(onGetHSV()));
     connect(ui->button_add, SIGNAL(clicked()), this, SLOT(onAdd()));
+    connect(ui->button_previous, SIGNAL(clicked()), this, SLOT(onPrevious()));
+    connect(ui->button_next, SIGNAL(clicked()), this, SLOT(onNext()));
+
     connect(this, SIGNAL(pathChanged(QString)), this, SLOT(onPathChange(QString)));
 }
 
@@ -50,9 +54,17 @@ MainWindow::~MainWindow()
  */
 void MainWindow::onLoad()
 {
-    QString path = QFileDialog::getOpenFileName(this, "Choose an image", ".");
-    if (path != "")
-        emit pathChanged(path);
+    QStringList paths = QFileDialog::getOpenFileNames(this, "Choose your images", ".");
+
+    // setting the member variables
+    m_paths = paths.toVector().toStdVector();
+    m_cur_path = m_paths.begin();
+
+    // make the "next" button available if more than 1 image is loaded
+    if (m_paths.size() > 1)
+        ui->button_next->setEnabled(true);
+
+    emit pathChanged(*m_cur_path);
 }
 
 void MainWindow::onPathChange(QString p)
@@ -91,6 +103,34 @@ void MainWindow::onAdd()
 {
     ui->imageLabel->setValues(false);
     updateOutput();
+}
+
+// scrolls to the previous image
+void MainWindow::onPrevious()
+{
+    // decrement the iterator
+    m_cur_path--;
+    ui->button_next->setEnabled(true);
+
+    if (m_cur_path == m_paths.begin()) {
+        ui->button_previous->setEnabled(false);
+    }
+
+    emit pathChanged(*m_cur_path);
+}
+
+// scrolls to the next image
+void MainWindow::onNext()
+{
+    // increment the iterator
+    m_cur_path++;
+    ui->button_previous->setEnabled(true);
+
+    if ((m_cur_path + 1) == m_paths.end()) {
+        ui->button_next->setEnabled(false);
+    }
+
+    emit pathChanged(*m_cur_path);
 }
 
 void MainWindow::updateOutput()
