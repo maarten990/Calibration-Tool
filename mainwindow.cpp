@@ -120,6 +120,9 @@ void MainWindow::onPrevious()
         ui->button_previous->setEnabled(false);
     }
 
+    // remove the threshold-flag
+    m_cur_is_threshed = false;
+
     emit pathChanged(*m_cur_path);
 }
 
@@ -133,6 +136,9 @@ void MainWindow::onNext()
     if ((m_cur_path + 1) == m_paths.end()) {
         ui->button_next->setEnabled(false);
     }
+
+    // remove the threshold-flag
+    m_cur_is_threshed = false;
 
     emit pathChanged(*m_cur_path);
 }
