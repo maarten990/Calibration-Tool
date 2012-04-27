@@ -64,6 +64,7 @@ void MainWindow::onLoad()
     // make the "next" button available if more than 1 image is loaded
     if (m_paths.size() > 1)
         ui->button_next->setEnabled(true);
+    ui->button_thresh->setEnabled(true);
 
     emit pathChanged(*m_cur_path);
 }

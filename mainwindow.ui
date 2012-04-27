@@ -105,6 +105,9 @@
       </item>
       <item>
        <widget class="QPushButton" name="button_thresh">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="text">
          <string>Test treshold values</string>
         </property>
