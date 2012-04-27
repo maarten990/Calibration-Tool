@@ -61,21 +61,25 @@
      </layout>
     </item>
     <item>
-     <widget class="TouchyLabel" name="imageLabel">
-      <property name="text">
-       <string>Image goes here!</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPlainTextEdit" name="output_text">
-      <property name="readOnly">
-       <bool>true</bool>
-      </property>
-      <property name="plainText">
-       <string>Output goes here!</string>
-      </property>
-     </widget>
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <widget class="TouchyLabel" name="imageLabel">
+        <property name="text">
+         <string>Image goes here!</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPlainTextEdit" name="output_text">
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
+        <property name="plainText">
+         <string>Output goes here!</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </item>
    </layout>
   </widget>

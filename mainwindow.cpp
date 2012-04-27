@@ -24,6 +24,13 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->imageLabel->setBackgroundRole(QPalette::Base);
     ui->imageLabel->setAlignment(Qt::AlignTop & Qt::AlignLeft);
 
+    // hiding some elements at first
+    ui->imageLabel->setVisible(false);
+    ui->output_text->setVisible(false);
+
+    // resizing to the smallest necessary size
+    this->resize(0, 0);
+
     /*
      * connections
      */
@@ -66,8 +73,12 @@ void MainWindow::onPathChange(QString p)
     m_image_hsv = cvCreateImage(cvGetSize(m_image), 8, 3);
     cvCvtColor(m_image, m_image_hsv, CV_BGR2HSV);
 
-    // passing the iplImage to the QLabel
+    // passing the iplImage to the QLabel and making it visible
+    // if it isn't already
     ui->imageLabel->setImage(m_image, m_image_hsv);
+
+    if (!ui->imageLabel->isVisible())
+        ui->imageLabel->setVisible(true);
 }
 
 void MainWindow::onGetHSV()
@@ -84,6 +95,10 @@ void MainWindow::onAdd()
 
 void MainWindow::updateOutput()
 {
+    // set it to be visible if it wasn't already
+    if (!ui->output_text->isVisible())
+        ui->output_text->setVisible(true);
+
     HSVMinMax minmax = ui->imageLabel->getValues();
 
     stringstream sstr;
