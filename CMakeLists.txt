@@ -14,7 +14,7 @@ ADD_DEFINITIONS(${QT_DEFINITIONS})
 
 INCLUDE_DIRECTORIES(${QT_INCLUDE_DIR})
 
-SET(cal_SOURCES main.cpp mainwindow.cpp touchylabel.cpp)
+SET(cal_SOURCES main.cpp mainwindow.cpp touchylabel.cpp connectedcomponent.cpp)
 SET(cal_HEADERS mainwindow.h touchylabel.h)
 SET(cal_FORMS mainwindow.ui)
 
