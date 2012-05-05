@@ -11,7 +11,7 @@ class ConnectedComponent
 {
 public:
     ConnectedComponent(IplImage *img, int x, int y, int threshold);
-    CvPoint get_points();
+    vector<CvPoint> get_points();
 
 private:
     // fields

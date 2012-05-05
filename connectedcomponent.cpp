@@ -11,7 +11,12 @@ ConnectedComponent::ConnectedComponent(IplImage *img, int x, int y, int threshol
     start_the_wand(x, y, threshold);
 }
 
-vector<CvPoint> ConnectedComponent::start_the_wand(int x, int y, int threshold)
+vector<CvPoint> ConnectedComponent::get_points()
+{
+    return m_points;
+}
+
+void ConnectedComponent::start_the_wand(int x, int y, int threshold)
 {
     vector<CvPoint> stack;
     stack.push_back(cvPoint(x, y));
@@ -21,15 +26,17 @@ vector<CvPoint> ConnectedComponent::start_the_wand(int x, int y, int threshold)
     // main loop
     while (!stack.empty()) {
         // pop a point from the stack and add it to the list of visited points
-        current = stack.pop_back();
+        current = stack.back();
+        stack.pop_back();
         m_visited.push_back(current);
 
-        if (squared_error(current, m_average) < threshold) {
+        if (squared_error(current) < threshold) {
             // adjusting the average and adding the point to the list of points
             update_average(current);
             m_points.push_back(current);
 
             // adding the surrounding points to the stack
+            add_neighbours(stack, current);
         }
     }
 }
@@ -67,15 +74,23 @@ void ConnectedComponent::add_neighbours(vector<CvPoint> &stack, CvPoint p)
 {
     int new_x, new_y;
     CvPoint new_point;
-    for (int &i : {-1, 0, 1}) {
-        for (int &j : {-1, 0, 1}) {
+
+    for (auto &i : {-1, 0, 1}) {
+        for (auto &j : {-1, 0, 1}) {
             new_x = p.x + i;
             new_y = p.y + j;
             new_point = cvPoint(new_x, new_y);
+
+            // lambda function for comparison
+            auto comparator = [&new_point] (CvPoint p)
+            {
+                return (p.x == new_point.x) && (p.y == new_point.y);
+            };
+
             if (new_x >= 0 && new_x < m_img->width &&
                 new_y >= 0 && new_y < m_img->height &&
-                (find(m_visited.begin(), m_visited.end(), new_point) == m_visited.end()) &&
-                (find(stack.begin(), stack.end(), new_point) == stack.end()))
+                (find_if(m_visited.begin(), m_visited.end(), comparator) == m_visited.end()) &&
+                (find_if(stack.begin(), stack.end(), comparator) == stack.end()))
             {
                 stack.push_back(new_point);
             }
