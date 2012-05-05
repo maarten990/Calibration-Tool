@@ -4,7 +4,6 @@
 #include <cv.h>
 #include <highgui.h>
 #include <vector>
-#include <tuple>
 
 using namespace std;
 
@@ -25,6 +24,7 @@ private:
     void start_the_wand(int x, int y, int threshold);
     double squared_error(CvPoint a);
     void update_average(CvPoint p);
+    void add_neighbours(vector<CvPoint> &stack, CvPoint p);
 };
 
 #endif // CONNECTEDCOMPONENT_H

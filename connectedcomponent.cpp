@@ -1,5 +1,6 @@
 #include "connectedcomponent.h"
 #include <math.h>
+#include <algorithm>
 
 using namespace std;
 
@@ -29,7 +30,6 @@ vector<CvPoint> ConnectedComponent::start_the_wand(int x, int y, int threshold)
             m_points.push_back(current);
 
             // adding the surrounding points to the stack
-            // TODO
         }
     }
 }
@@ -60,4 +60,25 @@ void ConnectedComponent::update_average(CvPoint p)
     }
 
     m_average = new_average;
+}
+
+// adds the neighbours of point p to the given vector
+void ConnectedComponent::add_neighbours(vector<CvPoint> &stack, CvPoint p)
+{
+    int new_x, new_y;
+    CvPoint new_point;
+    for (int &i : {-1, 0, 1}) {
+        for (int &j : {-1, 0, 1}) {
+            new_x = p.x + i;
+            new_y = p.y + j;
+            new_point = cvPoint(new_x, new_y);
+            if (new_x >= 0 && new_x < m_img->width &&
+                new_y >= 0 && new_y < m_img->height &&
+                (find(m_visited.begin(), m_visited.end(), new_point) == m_visited.end()) &&
+                (find(stack.begin(), stack.end(), new_point) == stack.end()))
+            {
+                stack.push_back(new_point);
+            }
+        }
+    }
 }
