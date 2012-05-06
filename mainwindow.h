@@ -58,6 +58,8 @@ public slots:
     void onNext();
     void onThresh();
     void onToggleWand();
+    void onWanded(vector<CvPoint> *points);
+    void onThreshChange(QString p);
 
 signals:
     void pathChanged(QString p);

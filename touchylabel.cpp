@@ -2,6 +2,7 @@
 #include <iostream>
 #include <QPainter>
 #include <QBrush>
+#include "connectedcomponent.h"
 
 using namespace std;
 
@@ -13,31 +14,41 @@ TouchyLabel::TouchyLabel(QWidget* &w) : QLabel(w)
 
 void TouchyLabel::mousePressEvent(QMouseEvent *ev)
 {
-    m_start_point = ev->pos();
+    if (m_wand_mode == false)
+        m_start_point = ev->pos();
+    else {
+        ConnectedComponent wand(m_hsv, ev->pos().x(), ev->pos().y(), m_wand_threshold);
+        m_wand_points = wand.get_points();
+        emit magicWanded(&m_wand_points);
+    }
 }
 
 void TouchyLabel::mouseMoveEvent(QMouseEvent *ev)
 {
-    QPoint end_point = ev->pos();
-    correctSize(&m_end_point);
+    if (m_wand_mode == false) {
+        QPoint end_point = ev->pos();
+        correctSize(&m_end_point);
 
-    int begin_x = m_start_point.x();
-    int begin_y = m_start_point.y();
-    int width = end_point.x() - m_start_point.x();
-    int height = end_point.y() - m_start_point.y();
+        int begin_x = m_start_point.x();
+        int begin_y = m_start_point.y();
+        int width = end_point.x() - m_start_point.x();
+        int height = end_point.y() - m_start_point.y();
 
-    m_pixmap_rect = m_pixmap_orig;
-    QPainter p(&m_pixmap_rect);
-    p.setPen(Qt::magenta);
+        m_pixmap_rect = m_pixmap_orig;
+        QPainter p(&m_pixmap_rect);
+        p.setPen(Qt::magenta);
 
-    p.drawRect(begin_x, begin_y, width, height);
-    this->setPixmap(m_pixmap_rect);
+        p.drawRect(begin_x, begin_y, width, height);
+        this->setPixmap(m_pixmap_rect);
+    }
 }
 
 void TouchyLabel::mouseReleaseEvent(QMouseEvent *ev)
 {
-    m_end_point = ev->pos();
-    correctSize(&m_end_point);
+    if (m_wand_mode == false) {
+        m_end_point = ev->pos();
+        correctSize(&m_end_point);
+    }
 }
 
 void TouchyLabel::correctSize(QPoint *point) {
@@ -138,4 +149,9 @@ void TouchyLabel::toggleWandMode(int threshold)
 bool TouchyLabel::getWandMode()
 {
     return m_wand_mode;
+}
+
+void TouchyLabel::setWandThresh(int threshold)
+{
+    m_wand_threshold = threshold;
 }

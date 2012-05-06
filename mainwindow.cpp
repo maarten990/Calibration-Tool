@@ -49,6 +49,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->button_thresh, SIGNAL(clicked()), this, SLOT(onThresh()));
     connect(ui->button_wand, SIGNAL(clicked()), this, SLOT(onToggleWand()));
 
+    connect(ui->imageLabel, SIGNAL(magicWanded(vector<CvPoint>*)), this, SLOT(onWanded(vector<CvPoint>*)));
+    connect(ui->input_mwand, SIGNAL(textChanged(QString)), this, SLOT(onThreshChange(QString)));
     connect(this, SIGNAL(pathChanged(QString)), this, SLOT(onPathChange(QString)));
 }
 
@@ -219,4 +221,24 @@ void MainWindow::updateStatus()
         ui->statusBar->showMessage("Wand mode: Enabled");
     else
         ui->statusBar->showMessage("Wand mode: Disabled");
+}
+
+void MainWindow::onWanded(vector<CvPoint> *points)
+{
+    cout << "Wanded!" << endl;
+    cout << points->size() << endl;
+    IplImage *hsv = ui->imageLabel->getHSVImage();
+
+    for (auto &p : *points) {
+        cvSet2D(m_image, p.y, p.x, cvScalar(255, 0, 0));
+    }
+
+    cvSaveImage("blobbed.png", m_image);
+    emit pathChanged(QString("./blobbed.png"));
+}
+
+void MainWindow::onThreshChange(QString p)
+{
+    int threshold = atoi(p.toStdString().c_str());
+    ui->imageLabel->setWandThresh(threshold);
 }

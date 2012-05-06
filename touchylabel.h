@@ -22,10 +22,12 @@ public:
     void setValues(bool reset=true);
     HSVMinMax getValues();
     IplImage* getHSVImage();
+    IplImage* getImage();
 
     // magic wand
     void toggleWandMode(int threshold);
     bool getWandMode();
+    void setWandThresh(int threshold);
 
 private:
     // methods
@@ -49,9 +51,10 @@ private:
     // magic wand
     int m_wand_threshold;
     bool m_wand_mode;
-
+    vector<CvPoint> m_wand_points;
 
 signals:
+    void magicWanded(vector<CvPoint> *points);
     
 public slots:
     
