@@ -47,6 +47,7 @@ private:
 
     // methods
     void updateOutput();
+    void updateStatus();
 
 public slots:
     void onLoad();
@@ -56,6 +57,7 @@ public slots:
     void onPrevious();
     void onNext();
     void onThresh();
+    void onToggleWand();
 
 signals:
     void pathChanged(QString p);

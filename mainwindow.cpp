@@ -6,6 +6,7 @@
 #include <sstream>
 #include <QString>
 #include <QStringList>
+#include <cstdlib>
 
 using namespace std;
 
@@ -34,6 +35,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     m_cur_is_threshed = false;
 
+    // update the statusbar
+    updateStatus();
+
     /*
      * connections
      */
@@ -43,6 +47,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->button_previous, SIGNAL(clicked()), this, SLOT(onPrevious()));
     connect(ui->button_next, SIGNAL(clicked()), this, SLOT(onNext()));
     connect(ui->button_thresh, SIGNAL(clicked()), this, SLOT(onThresh()));
+    connect(ui->button_wand, SIGNAL(clicked()), this, SLOT(onToggleWand()));
 
     connect(this, SIGNAL(pathChanged(QString)), this, SLOT(onPathChange(QString)));
 }
@@ -199,4 +204,19 @@ void MainWindow::updateOutput()
 
     ui->output_text->setPlainText(QString(sstr.str().c_str()));
     ui->output_text->update();
+}
+
+void MainWindow::onToggleWand()
+{
+    int threshold = atoi(ui->input_mwand->text().toStdString().c_str());
+    ui->imageLabel->toggleWandMode(threshold);
+    updateStatus();
+}
+
+void MainWindow::updateStatus()
+{
+    if (ui->imageLabel->getWandMode() == true)
+        ui->statusBar->showMessage("Wand mode: Enabled");
+    else
+        ui->statusBar->showMessage("Wand mode: Disabled");
 }

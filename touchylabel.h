@@ -16,12 +16,16 @@ class TouchyLabel : public QLabel
 {
     Q_OBJECT
 public:
-    // methods
+    /* methods */
     explicit TouchyLabel(QWidget*& w);
     void setImage(IplImage *img, IplImage *hsv);
     void setValues(bool reset=true);
     HSVMinMax getValues();
     IplImage* getHSVImage();
+
+    // magic wand
+    void toggleWandMode(int threshold);
+    bool getWandMode();
 
 private:
     // methods
@@ -30,7 +34,7 @@ private:
     void mouseMoveEvent(QMouseEvent *ev);
     void correctSize(QPoint *point);
 
-    // fields
+    /* fields */
     QPixmap m_pixmap_orig;
     QPixmap m_pixmap_rect;
     IplImage *m_img;
@@ -41,6 +45,10 @@ private:
     vector<int> m_hues;
     vector<int> m_sats;
     vector<int> m_vals;
+    
+    // magic wand
+    int m_wand_threshold;
+    bool m_wand_mode;
 
 
 signals:

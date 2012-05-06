@@ -5,8 +5,10 @@
 
 using namespace std;
 
-TouchyLabel::TouchyLabel(QWidget* &w)
+TouchyLabel::TouchyLabel(QWidget* &w) : QLabel(w)
 {
+    m_wand_mode = false;
+    m_wand_threshold = 0;
 }
 
 void TouchyLabel::mousePressEvent(QMouseEvent *ev)
@@ -121,4 +123,19 @@ void TouchyLabel::setValues(bool reset)
 IplImage* TouchyLabel::getHSVImage()
 {
     return m_hsv;
+}
+
+void TouchyLabel::toggleWandMode(int threshold)
+{
+    if (m_wand_mode == true)
+        m_wand_mode = false;
+    else
+        m_wand_mode = true;
+
+    m_wand_threshold = threshold;
+}
+
+bool TouchyLabel::getWandMode()
+{
+    return m_wand_mode;
 }
