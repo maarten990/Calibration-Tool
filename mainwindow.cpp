@@ -223,10 +223,10 @@ void MainWindow::updateStatus()
         ui->statusBar->showMessage("Wand mode: Disabled");
 }
 
+// TODO: make the drawing of points reversible
 void MainWindow::onWanded(vector<CvPoint> *points)
 {
-    cout << "Wanded!" << endl;
-    cout << points->size() << endl;
+    ui->imageLabel->setWandValues(*points);
     IplImage *hsv = ui->imageLabel->getHSVImage();
 
     for (auto &p : *points) {

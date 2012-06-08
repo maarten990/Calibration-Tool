@@ -20,6 +20,7 @@ public:
     explicit TouchyLabel(QWidget*& w);
     void setImage(IplImage *img, IplImage *hsv);
     void setValues(bool reset=true);
+    void setWandValues(vector<CvPoint> &points, bool reset=false);
     HSVMinMax getValues();
     IplImage* getHSVImage();
     IplImage* getImage();
