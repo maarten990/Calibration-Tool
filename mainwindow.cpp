@@ -226,7 +226,11 @@ void MainWindow::updateStatus()
 // TODO: make the drawing of points reversible
 void MainWindow::onWanded(vector<CvPoint> *points)
 {
+    // calculate the hsv range of the wanded points and update the output
     ui->imageLabel->setWandValues(*points);
+    updateOutput();
+
+    // update the image to show which points have been selected
     IplImage *hsv = ui->imageLabel->getHSVImage();
 
     for (auto &p : *points) {
