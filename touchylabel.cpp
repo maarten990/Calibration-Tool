@@ -1,3 +1,5 @@
+// TODO: properly comment this file
+
 #include "touchylabel.h"
 #include <iostream>
 #include <QPainter>
@@ -157,6 +159,7 @@ void TouchyLabel::setWandThresh(int threshold)
 }
 
 // sets the threshold according to a given vectors of points
+// TODO: merge with setValues
 void TouchyLabel::setWandValues(vector<CvPoint> &points, bool reset)
 {
     if (reset) {
