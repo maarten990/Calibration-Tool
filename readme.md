@@ -14,15 +14,10 @@ Assuming you want a seperate "build" folder:
     mkdir build
     cd build
 
-Followed by either:
-
-    qmake ..
-    make
-
-or:
+Followed by:
 
     cmake ..
     make
 
-Alternatively you can load in the QMake file (CalibrationTool.pro) in QtCreator,
-or the CMakeLists.txt in practically every IDE and use their build function.
+Alternatively you can load in CMakeLists.txt in practically every IDE and use
+their build function.
