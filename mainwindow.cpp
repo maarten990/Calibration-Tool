@@ -6,13 +6,17 @@
 #include <sstream>
 #include <QString>
 #include <QStringList>
+#include <QShortcut>
 #include <cstdlib>
 
 using namespace std;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    ui(new Ui::MainWindow),
+    shortcut_next(QKeySequence("Right"), this),
+    shortcut_prev(QKeySequence("Left"), this),
+    shortcut_togglethresh(QKeySequence("t"), this)
 {
     ui->setupUi(this);
 
@@ -52,6 +56,10 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->imageLabel, SIGNAL(magicWanded(vector<CvPoint>*)), this, SLOT(onWanded(vector<CvPoint>*)));
     connect(ui->input_mwand, SIGNAL(textChanged(QString)), this, SLOT(onThreshChange(QString)));
     connect(this, SIGNAL(pathChanged(QString)), this, SLOT(onPathChange(QString)));
+
+    connect(&shortcut_next, SIGNAL(activated()), this, SLOT(onNext()));
+    connect(&shortcut_prev, SIGNAL(activated()), this, SLOT(onPrevious()));
+    connect(&shortcut_togglethresh, SIGNAL(activated()), this, SLOT(onThresh()));
 }
 
 MainWindow::~MainWindow()

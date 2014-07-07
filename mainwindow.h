@@ -10,6 +10,7 @@
 #include <QtAlgorithms>
 #include <QEvent>
 #include <QMouseEvent>
+#include <QShortcut>
 #include <vector>
 
 // OpenCV
@@ -44,6 +45,11 @@ private:
 
     // variable to hold whether the current image is a thresholded one
     bool m_cur_is_threshed;
+
+    // key shortcuts
+    QShortcut shortcut_next;
+    QShortcut shortcut_prev;
+    QShortcut shortcut_togglethresh;
 
     // methods
     void updateOutput();
